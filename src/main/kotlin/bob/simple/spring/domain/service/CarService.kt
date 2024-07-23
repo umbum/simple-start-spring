@@ -1,6 +1,7 @@
 package bob.simple.spring.domain.service
 
 import bob.simple.spring.data.repository.CarRepository
+import bob.simple.spring.domain.model.Car
 import bob.simple.spring.presentation.dto.CarRequestDto
 import bob.simple.spring.presentation.dto.CarResponseDto
 import org.springframework.stereotype.Service
@@ -12,12 +13,12 @@ class CarService(
     var id = 3
 
     fun getCar(id: String): CarResponseDto {
-        val car = carRepository.selectBy(id)
+        val car: Car = carRepository.selectBy(id)
         return CarResponseDto.from(car)
     }
 
     fun createCar(carRequestDto: CarRequestDto): CarResponseDto {
-        val car = carRequestDto.toEntity(id++.toString())
+        val car: Car = carRequestDto.toEntity(id++.toString())
         carRepository.insert(car)
         return CarResponseDto.from(car)
     }
@@ -26,7 +27,7 @@ class CarService(
         id: String,
         status: Boolean,
     ): CarResponseDto {
-        val car = carRepository.selectBy(id)
+        val car: Car = carRepository.selectBy(id)
 
         if (car.acStatus == status) throw IllegalStateException("acStatus is already $status.")
 
