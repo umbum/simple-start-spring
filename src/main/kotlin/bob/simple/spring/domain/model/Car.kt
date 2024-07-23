@@ -1,4 +1,4 @@
-package bob.simple.spring.model
+package bob.simple.spring.domain.model
 
 data class Car(
     val id: String,

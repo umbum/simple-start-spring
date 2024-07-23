@@ -1,10 +1,6 @@
-package bob.simple.spring.repository
+package bob.simple.spring.data.repository
 
-import bob.simple.spring.model.Car
-import org.springframework.jdbc.core.BeanPropertyRowMapper
-import org.springframework.jdbc.core.DataClassRowMapper
-import org.springframework.jdbc.core.RowMapper
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource
+import bob.simple.spring.domain.model.Car
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
 import org.springframework.stereotype.Repository
@@ -13,6 +9,16 @@ import org.springframework.stereotype.Repository
 class CarRepository(
     private val jdbcOperations: NamedParameterJdbcOperations,
 ) {
+
+    fun insert(car: Car) {
+        jdbcOperations.update(
+            "insert into car (id, ac_status, model) values(:id, :acStatus, :model)",
+            MapSqlParameterSource()
+                .addValue("acStatus", car.acStatus)
+                .addValue("model", car.model)
+                .addValue("id", car.id)
+        )
+    }
 
     fun selectBy(id: String): Car {
         return jdbcOperations.queryForObject(
