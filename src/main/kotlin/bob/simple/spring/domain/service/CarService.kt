@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service
 
 @Service
 class CarService(
-    private val carRepository: CarRepository,
+    private val carJdbcRepository: CarRepository,
 ) {
     var id = 3
 
     fun getCar(id: String): CarResponseDto {
-        val car: Car = carRepository.selectBy(id)
+        val car: Car = carJdbcRepository.selectBy(id)
         return CarResponseDto.from(car)
     }
 
     fun createCar(carRequestDto: CarRequestDto): CarResponseDto {
         val car: Car = carRequestDto.toEntity(id++.toString())
-        carRepository.insert(car)
+        carJdbcRepository.insert(car)
         return CarResponseDto.from(car)
     }
 
@@ -27,12 +27,12 @@ class CarService(
         id: String,
         status: Boolean,
     ): CarResponseDto {
-        val car: Car = carRepository.selectBy(id)
+        val car: Car = carJdbcRepository.selectBy(id)
 
         if (car.acStatus == status) throw IllegalStateException("acStatus is already $status.")
 
         car.acStatus = status
-        carRepository.update(car)
+        carJdbcRepository.update(car)
         return CarResponseDto.from(car)
     }
 }
