@@ -44,4 +44,8 @@ class CarJdbcRepository(
 
     @Suppress("ktlint:standard:function-naming")
     fun jdbc에는_있고_redis에는_없는_메서드() {}
+
+    companion object {
+        fun staticMethod() {}
+    }
 }
